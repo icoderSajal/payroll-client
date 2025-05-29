@@ -30,7 +30,7 @@ export const DepartmentButtons = ({ Id, onDepartmentDelete }) => {
 
     try {
       const response = await axios.delete(
-        `http://localhost:8000/api/v1/department/${Id}`,
+        `https://payroll-server-1.onrender.com/api/v1/department/${Id}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,

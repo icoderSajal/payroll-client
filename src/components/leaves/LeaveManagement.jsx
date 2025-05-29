@@ -10,11 +10,14 @@ const LeaveManagement = () => {
 
   const fetchLeaves = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/api/v1/leave", {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
+      const response = await axios.get(
+        "https://payroll-server-1.onrender.com/api/v1/leave",
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
 
       if (response.data.success) {
         let sno = 1;

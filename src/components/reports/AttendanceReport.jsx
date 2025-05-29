@@ -21,7 +21,7 @@ const AttendanceReport = () => {
     e.preventDefault();
     setLoading(true);
     //alert(JSON.stringify(formData));
-    const url = "http://localhost:8000/api/v1/admin-report/get";
+    const url = "https://payroll-server-1.onrender.com/api/v1/admin-report/get";
     try {
       const res = await axios.get(url, formData);
       setReportData(res.data.data);

@@ -25,7 +25,7 @@ const EmployeeList = () => {
       setLoading(true);
       try {
         const { data } = await axios.get(
-          "http://localhost:8000/api/v1/employee",
+          "https://payroll-server-1.onrender.com/api/v1/employee",
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -45,7 +45,7 @@ const EmployeeList = () => {
               <img
                 className="rounded-full"
                 width={40}
-                src={`http://localhost:8000/${emp.userId.profileImage}`}
+                src={`https://payroll-server-1.onrender.com/${emp.userId.profileImage}`}
                 alt={`${emp.userId.name}'s profile`}
               />
             ),

@@ -34,7 +34,7 @@ const AddEmployee = () => {
     });
     try {
       const response = await axios.post(
-        "http://localhost:8000/api/v1/employee/add",
+        "https://payroll-server-1.onrender.com/api/v1/employee/add",
         formDataObj,
         {
           headers: {

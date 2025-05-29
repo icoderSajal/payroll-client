@@ -6,7 +6,7 @@ export const fetchDepartments = async () => {
   let departments;
   try {
     const response = await axios.get(
-      "http://localhost:8000/api/v1/department",
+      "https://payroll-server-1.onrender.com/api/v1/department",
       {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -28,7 +28,7 @@ export const getEmployees = async (id) => {
   let employees;
   try {
     const response = await axios.get(
-      `http://localhost:8000/api/v1/employee/department/${id}`,
+      `https://payroll-server-1.onrender.com/api/v1/employee/department/${id}`,
       {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -49,11 +49,14 @@ export const getEmployees = async (id) => {
 export const getAllEmployees = async () => {
   let employees;
   try {
-    const response = await axios.get("http://localhost:8000/api/v1/employee", {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    });
+    const response = await axios.get(
+      "https://payroll-server-1.onrender.com/api/v1/employee",
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
     if (response.data.success) {
       employees = response.data.employees;
     }

@@ -25,7 +25,7 @@ const EmployeeSetting = () => {
     } else {
       try {
         const response = await axios.put(
-          "http://localhost:8000/api/v1/setting/change-password",
+          "https://payroll-server-1.onrender.com/api/v1/setting/change-password",
           setting,
           {
             headers: {

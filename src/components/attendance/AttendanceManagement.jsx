@@ -15,7 +15,6 @@ const AttendanceManagement = () => {
   });
   const [departments, setDepartments] = useState([]);
   const [employees, setEmployees] = useState([]);
-  
 
   const { id } = useParams();
 
@@ -46,7 +45,7 @@ const AttendanceManagement = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:8000/api/v1/salary/add/",
+        "https://payroll-server-1.onrender.com/api/v1/salary/add/",
         salary,
         {
           headers: {
@@ -65,7 +64,7 @@ const AttendanceManagement = () => {
       }
     }
   };
-  
+
   return (
     <>
       {departments ? (
@@ -142,7 +141,6 @@ const AttendanceManagement = () => {
               >
                 Back
               </button>
-             
             </div>
           </form>
         </div>

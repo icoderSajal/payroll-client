@@ -12,7 +12,7 @@ const EmployeeView = () => {
     const fetchEmployee = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8000/api/v1/employee/${id}`,
+          `https://payroll-server-1.onrender.com/api/v1/employee/${id}`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,

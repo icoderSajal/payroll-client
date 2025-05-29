@@ -22,7 +22,7 @@ const AdminSummary = () => {
     const fetchAttendanceData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:8000/api/v1/admin-report/get",
+          "https://payroll-server-1.onrender.com/api/v1/admin-report/get",
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -43,7 +43,7 @@ const AdminSummary = () => {
     const fetchSummary = async () => {
       try {
         const summary = await axios.get(
-          "http://localhost:8000/api/v1/dashboard/summary",
+          "https://payroll-server-1.onrender.com/api/v1/dashboard/summary",
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,

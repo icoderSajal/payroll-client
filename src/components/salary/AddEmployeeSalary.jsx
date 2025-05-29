@@ -45,7 +45,7 @@ const AddEmployeeSalary = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:8000/api/v1/salary/add/",
+        "https://payroll-server-1.onrender.com/salary/add/",
         salary,
         {
           headers: {

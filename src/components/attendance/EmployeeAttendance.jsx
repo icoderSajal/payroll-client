@@ -31,7 +31,7 @@ const EmployeeAttendance = () => {
     const fetchEmployee = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8000/api/v1/employee/${id}`,
+          `https://payroll-server-1.onrender.com/api/v1/employee/${id}`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -115,7 +115,7 @@ const EmployeeAttendance = () => {
       };
 
       const response = await axios.post(
-        "http://localhost:8000/api/v1/attendance/start",
+        "https://payroll-server-1.onrender.com/api/v1/attendance/start",
         payload,
         {
           headers: {
@@ -155,7 +155,7 @@ const EmployeeAttendance = () => {
   const updateAttendance = async (logoutTime) => {
     try {
       const response = await axios.put(
-        `http://localhost:8000/api/v1/attendance/logout/${attendanceId}`,
+        `https://payroll-server-1.onrender.com/api/v1/attendance/logout/${attendanceId}`,
         { logoutTime },
         {
           headers: {

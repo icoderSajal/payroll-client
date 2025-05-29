@@ -22,11 +22,14 @@ const AdminAddAttendance = () => {
   useEffect(() => {
     const fetchEmployees = async () => {
       try {
-        const res = await axios.get("http://localhost:8000/api/v1/employee", {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        });
+        const res = await axios.get(
+          "https://payroll-server-1.onrender.com/api/v1/employee",
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
         setEmployees(res.data.employees || []);
       } catch {
         toast.error("Failed to fetch employees");
@@ -82,7 +85,7 @@ const AdminAddAttendance = () => {
 
     try {
       const res = await axios.post(
-        "http://localhost:8000/api/v1/attendance/manual",
+        "https://payroll-server-1.onrender.com/api/v1/attendance/manual",
         payload,
         {
           headers: {
@@ -114,7 +117,7 @@ const AdminAddAttendance = () => {
   const fetchAtt = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:8000/api/v1/admin-report/get",
+        "https://payroll-server-1.onrender.com/api/v1/admin-report/get",
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,

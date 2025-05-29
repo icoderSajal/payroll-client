@@ -15,7 +15,7 @@ const Login = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:8000/api/v1/auth/login",
+        "https://payroll-server-1.onrender.com/api/v1/auth/login",
         { email, password }
       );
 
