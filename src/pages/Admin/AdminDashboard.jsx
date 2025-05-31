@@ -6,17 +6,17 @@ import { useState } from "react";
 
 const AdminDashboard = () => {
   const { user } = useAuth();
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   return (
     <div className="flex h-screen overflow-hidden bg-gray-100">
       {/* Sidebar */}
       <div
-        className={`fixed z-40 inset-y-0 left-0 transform ${
+        className={` fixed z-40 inset-y-0 left-0 transform ${
           isSidebarOpen ? "translate-x-0" : "-translate-x-full"
         } md:translate-x-0 md:static md:inset-0 transition-transform duration-300 ease-in-out`}
       >
-        <AdminSidebar />
+        <AdminSidebar toggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)} />
       </div>
 
       {/* Main Content Area */}

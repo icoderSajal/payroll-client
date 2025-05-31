@@ -50,7 +50,7 @@ export const colums = [
 export const TaskButtons = ({ Id }) => {
   const navigate = useNavigate();
   const handleView = () => {
-    navigate(`/admin-dashboard/leave/detail/${Id}`);
+    navigate(`/admin-dashboard/task/${Id}`);
   };
   return (
     <button

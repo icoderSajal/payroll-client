@@ -2,7 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import * as XLSX from "xlsx";
 import { useEffect } from "react";
-
+import { Base_Url } from "../../service/Endpoints";
 const AttendanceReport = () => {
   const [formData, setFormData] = useState({
     reportType: "",
@@ -34,14 +34,11 @@ const AttendanceReport = () => {
   };
   const fetchAtt = async () => {
     try {
-      const response = await axios.get(
-        "http://localhost:8000/api/v1/admin-report/get",
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
+      const response = await axios.get(`${Base_Url}/api/v1/admin-report/get`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
       const data = response.data.atts;
       console.log(data);
 
@@ -66,7 +63,7 @@ const AttendanceReport = () => {
   return (
     <div className="max-w-full mx-auto mt-12 px-4 sm:px-6 lg:px-8">
       <div className="bg-white shadow-md rounded-lg p-8">
-        <h2 className="text-3xl font-semibold text-gray-800 mb-8 text-center">
+        <h2 className="text-4xl font-bold text-center text-teal-700 mb-8">
           Report Request Form
         </h2>
         <form className="space-y-6" onSubmit={handleSubmit}>

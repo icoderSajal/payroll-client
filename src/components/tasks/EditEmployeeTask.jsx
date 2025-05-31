@@ -5,7 +5,7 @@ import { Link, useParams } from "react-router-dom";
 import { getAllEmployees } from "../../utils/EmployeeHelper";
 import { Base_Url } from "../../service/Endpoints";
 
-const EmployeeTaskDetails = () => {
+const EditEmployeeTask = () => {
   const [employees, setEmployees] = useState([]);
   const [task, setTask] = useState({
     employeeId: "",
@@ -76,7 +76,7 @@ const EmployeeTaskDetails = () => {
     <div className="max-w-3xl mx-auto mt-12 px-4 sm:px-6 lg:px-8">
       <div className="bg-white shadow-md rounded-lg p-8">
         <h2 className="text-4xl font-bold text-center text-teal-700 mb-8">
-          Update Task
+          Edit Employee Task
         </h2>
 
         <form className="space-y-6" onSubmit={handleSubmit}>
@@ -93,7 +93,6 @@ const EmployeeTaskDetails = () => {
                 value={task.employeeId}
                 onChange={handleChange}
                 className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
-                disabled="disable"
                 required
               >
                 <option value="">--Select Employee--</option>
@@ -117,7 +116,6 @@ const EmployeeTaskDetails = () => {
                 value={task.taskType}
                 onChange={handleChange}
                 className="block w-full border border-gray-300 rounded-md shadow-sm p-2.5"
-                disabled="disable"
                 required
               >
                 <option value="">-- Select Task Type --</option>
@@ -139,7 +137,6 @@ const EmployeeTaskDetails = () => {
                 name="startDate"
                 value={task.startDate?.substring(0, 10)}
                 onChange={handleChange}
-                disabled="disable"
                 className="block w-full border border-gray-300 rounded-md shadow-sm p-2.5"
                 required
               />
@@ -157,7 +154,6 @@ const EmployeeTaskDetails = () => {
                 name="endDate"
                 value={task.endDate?.substring(0, 10)}
                 onChange={handleChange}
-                disabled="disable"
                 className="block w-full border border-gray-300 rounded-md shadow-sm p-2.5"
                 required
               />
@@ -213,7 +209,7 @@ const EmployeeTaskDetails = () => {
 
             <Link
               className="bg-teal-600 text-white px-2 py-2 font-bold rounded-lg hover:bg-teal-800 transition duration-300"
-              to="/employee-dashboard"
+              to="/admin-dashboard/task"
             >
               Back
             </Link>
@@ -224,4 +220,4 @@ const EmployeeTaskDetails = () => {
   );
 };
 
-export default EmployeeTaskDetails;
+export default EditEmployeeTask;

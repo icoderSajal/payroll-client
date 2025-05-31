@@ -29,6 +29,8 @@ import AddEmployeeTask from "./components/tasks/AddEmployeeTask";
 import EmployeeTaskList from "./components/tasks/EmployeeTaskList";
 import AlltaskList from "./components/tasks/AlltaskList";
 import EmployeeTaskDetails from "./components/tasks/EmployeeTaskDetails";
+import EditEmployeeTask from "./components/tasks/EditEmployeeTask";
+
 const App = () => {
   return (
     <>
@@ -116,6 +118,10 @@ const App = () => {
             <Route
               path="/admin-dashboard/task/add"
               element={<AddEmployeeTask />}
+            ></Route>
+            <Route
+              path="/admin-dashboard/task/:id"
+              element={<EditEmployeeTask />}
             ></Route>
           </Route>
 

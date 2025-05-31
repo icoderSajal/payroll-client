@@ -5,7 +5,8 @@ import DataTable from "react-data-table-component";
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
 import { colums } from "../../utils/AttendanceHelper";
-
+import { Base_Url } from "../../service/Endpoints";
+import { getAllEmployees } from "../../utils/EmployeeHelper";
 const AdminAddAttendance = () => {
   const [employees, setEmployees] = useState([]);
   const [attreport, setAttreport] = useState([]);
@@ -22,20 +23,24 @@ const AdminAddAttendance = () => {
   useEffect(() => {
     const fetchEmployees = async () => {
       try {
-        const res = await axios.get(
-          "https://payroll-server-1.onrender.com/api/v1/employee",
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-          }
-        );
+        const res = await axios.get(`${{ Base_Url }}/api/v1/employee`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
         setEmployees(res.data.employees || []);
       } catch {
         toast.error("Failed to fetch employees");
       }
     };
     fetchEmployees();
+  }, []);
+  useEffect(() => {
+    const getEmployees = async () => {
+      const employees = await getAllEmployees();
+      setEmployees(employees);
+    };
+    getEmployees();
   }, []);
 
   useEffect(() => {
@@ -85,7 +90,7 @@ const AdminAddAttendance = () => {
 
     try {
       const res = await axios.post(
-        "https://payroll-server-1.onrender.com/api/v1/attendance/manual",
+        `${Base_Url}/api/v1/attendance/manual`,
         payload,
         {
           headers: {
@@ -116,14 +121,11 @@ const AdminAddAttendance = () => {
 
   const fetchAtt = async () => {
     try {
-      const response = await axios.get(
-        "https://payroll-server-1.onrender.com/api/v1/admin-report/get",
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
+      const response = await axios.get(`${Base_Url}/api/v1/admin-report/get`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
 
       if (response.data.success) {
         let sno = 1;

@@ -1,28 +1,25 @@
 import { useEffect, useState } from "react";
-import DataTable from "react-data-table-component";
+
 import axios from "axios";
 import toast from "react-hot-toast";
-import { colums, TaskButtons } from "../../utils/TasksHelper";
-import { Link, useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import { Base_Url } from "../../service/Endpoints";
 
 const EmployeeTaskList = () => {
   const { id } = useParams();
   const [tasks, setTasks] = useState([]);
-
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(true); // 🔹 Loading state
 
   const fetchTasks = async () => {
     //////////////
     setLoading(true);
     try {
-      const response = await axios.get(
-        `http://localhost:8000/api/v1/task/list/${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
+      const response = await axios.get(`${Base_Url}/api/v1/task/list/${id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
       if (response.data.success) {
         setTasks(response.data.tasks);
       }
@@ -70,7 +67,7 @@ const EmployeeTaskList = () => {
               <tbody>
                 {tasks.map((tks, index) => (
                   <tr
-                    key={tks.id}
+                    key={tks._id}
                     className="bg-white border-b dark:bg-gray-800 dark:border:gray-700"
                   >
                     <td className="px-6 py-3">{index + 1}</td>
@@ -97,12 +94,14 @@ const EmployeeTaskList = () => {
                     <td className="px-6 py-3">{tks.comments}</td>
                     <td className="px-6 py-3">{tks.status}</td>
                     <td className="px-6 py-3">
-                      <Link
-                        to={`/employee-dashboard/task/detail/${tks.id}`}
+                      <button
+                        onClick={() =>
+                          navigate(`/employee-dashboard/task/detail/${tks._id}`)
+                        }
                         className="px-4 py-1 bg-teal-500 rounded-lg text-white font-bold hover:bg-teal-700"
                       >
                         View
-                      </Link>
+                      </button>
                     </td>
                   </tr>
                 ))}

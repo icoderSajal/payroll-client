@@ -4,20 +4,18 @@ import DataTable from "react-data-table-component";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { colums, LeaveButtons } from "../../utils/LeavesHelper";
+import { Base_Url } from "../../service/Endpoints";
 const LeaveManagement = () => {
   const [leaves, setLeaves] = useState([]);
   const [filteredLeaves, setFilteredLeaves] = useState([]);
 
   const fetchLeaves = async () => {
     try {
-      const response = await axios.get(
-        "https://payroll-server-1.onrender.com/api/v1/leave",
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
+      const response = await axios.get(`${Base_Url}/api/v1/leave`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
 
       if (response.data.success) {
         let sno = 1;
@@ -69,7 +67,7 @@ const LeaveManagement = () => {
       {filteredLeaves ? (
         <>
           <div className="text-center mb-6">
-            <h3 className="font-bold text-2xl md:text-3xl">
+            <h3 className="text-4xl font-bold text-center text-teal-700 mb-8">
               Leaves Managenent
             </h3>
           </div>

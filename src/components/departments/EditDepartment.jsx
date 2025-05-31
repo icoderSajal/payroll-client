@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { Base_Url } from "../../service/Endpoints";
 const EditDepartment = () => {
   const { id } = useParams();
   const [department, setDepartment] = useState([]);
@@ -19,7 +20,7 @@ const EditDepartment = () => {
       setDepLoading(true);
       try {
         const response = await axios.get(
-          `https://payroll-server-1.onrender.com/api/v1/department/${id}`,
+          `${Base_Url}/api/v1/department/${id}`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -44,7 +45,7 @@ const EditDepartment = () => {
     e.preventDefault();
     try {
       const response = await axios.put(
-        `https://payroll-server-1.onrender.com/api/v1/department/${id}`,
+        `${Base_Url}/api/v1/department/${id}`,
         department,
         {
           headers: {
@@ -69,7 +70,9 @@ const EditDepartment = () => {
         <div>Loading...</div>
       ) : (
         <div className="max-w-3xl  mx-auto mt-10 bg-amber-50 p-8 rounded-md  shadow-md w-96">
-          <h3 className="text-2xl font-bold mb-6">Edit Departments</h3>
+          <h3 className="text-4xl font-bold text-center text-teal-700 mb-8">
+            Edit Departments
+          </h3>
 
           <form className="" onSubmit={handleSubmit}>
             <div className="">

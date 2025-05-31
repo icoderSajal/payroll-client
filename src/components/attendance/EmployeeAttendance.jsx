@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useAuth } from "../../context/AuthContext";
+import { Base_Url } from "../../service/Endpoints";
 
 const WORK_HOUR_LIMIT = 9; // 9 hours limit
 
@@ -30,14 +31,11 @@ const EmployeeAttendance = () => {
   useEffect(() => {
     const fetchEmployee = async () => {
       try {
-        const response = await axios.get(
-          `https://payroll-server-1.onrender.com/api/v1/employee/${id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-          }
-        );
+        const response = await axios.get(`${Base_Url}/api/v1/employee/${id}`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
 
         if (response.data.success) {
           const employeeData = response.data.employee;
@@ -113,9 +111,8 @@ const EmployeeAttendance = () => {
         loginTime: now,
         status: "Present",
       };
-
       const response = await axios.post(
-        "https://payroll-server-1.onrender.com/api/v1/attendance/start",
+        `${Base_Url}/api/v1/attendance/start`,
         payload,
         {
           headers: {
@@ -138,6 +135,8 @@ const EmployeeAttendance = () => {
         );
       }
     } catch (error) {
+      alert(error);
+
       toast.error("Failed to start attendance.");
     }
   };
@@ -155,7 +154,7 @@ const EmployeeAttendance = () => {
   const updateAttendance = async (logoutTime) => {
     try {
       const response = await axios.put(
-        `https://payroll-server-1.onrender.com/api/v1/attendance/logout/${attendanceId}`,
+        `${Base_Url}/api/v1/attendance/logout/${attendanceId}`,
         { logoutTime },
         {
           headers: {
@@ -171,7 +170,11 @@ const EmployeeAttendance = () => {
         navigate("/employee-dashboard");
       }
     } catch (error) {
-      toast.error("Failed to update attendance.");
+      console.error(
+        "Start Attendance Error:",
+        error.response?.data || error.message
+      );
+      toast.error("Failed to start attendance.");
     }
   };
 

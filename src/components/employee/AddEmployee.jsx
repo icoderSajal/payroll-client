@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { fetchDepartments } from "../../utils/EmployeeHelper";
-
+import { Base_Url } from "../../service/Endpoints";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
@@ -34,7 +34,7 @@ const AddEmployee = () => {
     });
     try {
       const response = await axios.post(
-        "https://payroll-server-1.onrender.com/api/v1/employee/add",
+        `${Base_Url}/api/v1/employee/add`,
         formDataObj,
         {
           headers: {
@@ -55,7 +55,9 @@ const AddEmployee = () => {
   };
   return (
     <div className="max-w-4xl mx-auto mt-10 bg-white p-8 rounded-md shadow-md">
-      <h2 className="text-2xl font-bold mb-6">Add New Employee</h2>
+      <h2 className="text-4xl font-bold text-center text-teal-700 mb-8">
+        Add New Employee
+      </h2>
       <form onSubmit={handleSubmit}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>

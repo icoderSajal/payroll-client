@@ -3,6 +3,7 @@ import axios from "axios";
 import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
+import { Base_Url } from "../../service/Endpoints";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -12,12 +13,13 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    //https://payroll-server-1.onrender.com/api/v1/auth/login
 
     try {
-      const response = await axios.post(
-        "https://payroll-server-1.onrender.com/api/v1/auth/login",
-        { email, password }
-      );
+      const response = await axios.post(`${Base_Url}/api/v1/auth/login`, {
+        email,
+        password,
+      });
 
       if (response.data.success) {
         login(response.data.user);
@@ -78,7 +80,7 @@ const Login = () => {
                 required
               />
             </div>
-            <div className="mb-4 flex items-center justify-between text-sm">
+            {/* <div className="mb-4 flex items-center justify-between text-sm">
               <label className="inline-flex items-center">
                 <input type="checkbox" className="form-checkbox" />
                 <span className="ml-2 text-gray-700">Remember me</span>
@@ -86,7 +88,7 @@ const Login = () => {
               <a href="#" className="text-teal-600 hover:underline">
                 Forgot Password?
               </a>
-            </div>
+            </div> */}
             <button
               className="w-full bg-teal-600 text-white py-2 rounded-2xl hover:bg-teal-950 hover:ring-2 transition-all duration-300"
               type="submit"

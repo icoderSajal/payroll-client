@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 import axios from "axios";
 import toast from "react-hot-toast";
-
+import { Base_Url } from "../../service/Endpoints";
 const EmployeeLeavesList = () => {
   let sno = 1;
   const { user } = useAuth();
@@ -12,14 +12,11 @@ const EmployeeLeavesList = () => {
 
   const fetchLeaves = async () => {
     try {
-      const response = await axios.get(
-        `https://payroll-server-1.onrender.com/api/v1/leave/${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
+      const response = await axios.get(`${Base_Url}/api/v1/leave/${id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
       // alert(response.data.leaves);
       if (response.data.success) {
         setLeaves(response.data.leaves);
@@ -37,7 +34,9 @@ const EmployeeLeavesList = () => {
   return (
     <div className="p-5">
       <div className="text-center">
-        <h3 className="font-bold text-2xl">Manage Leaves</h3>
+        <h3 className="text-4xl font-bold text-center text-teal-700 mb-8">
+          Manage Leaves
+        </h3>
       </div>
       <div className="flex justify-between items-center">
         <input

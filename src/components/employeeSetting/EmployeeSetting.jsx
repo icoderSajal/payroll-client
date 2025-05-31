@@ -3,7 +3,7 @@ import { useAuth } from "../../context/AuthContext";
 import { useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
-
+import { Base_Url } from "../../service/Endpoints";
 const EmployeeSetting = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
@@ -25,7 +25,7 @@ const EmployeeSetting = () => {
     } else {
       try {
         const response = await axios.put(
-          "https://payroll-server-1.onrender.com/api/v1/setting/change-password",
+          `${Base_Url}/api/v1/setting/change-password`,
           setting,
           {
             headers: {
@@ -47,7 +47,9 @@ const EmployeeSetting = () => {
   };
   return (
     <div className="max-w-3xl  mx-auto mt-10 bg-amber-50 p-8 rounded-md  shadow-md w-96">
-      <h3 className="text-2xl font-bold mb-6">Reset Password</h3>
+      <h3 className="text-4xl font-bold text-center text-teal-700 mb-8">
+        Reset Password
+      </h3>
 
       <form className="" onSubmit={handleSubmit}>
         <div className="">

@@ -4,7 +4,7 @@ import { fetchDepartments } from "../../utils/EmployeeHelper";
 
 import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
-
+import { Base_Url } from "../../service/Endpoints";
 const EmployeeEdit = () => {
   const [employee, setEmployee] = useState({
     name: "",
@@ -27,14 +27,11 @@ const EmployeeEdit = () => {
   useEffect(() => {
     const fetchEmployee = async () => {
       try {
-        const response = await axios.get(
-          `https://payroll-server-1.onrender.com/api/v1/employee/${id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-          }
-        );
+        const response = await axios.get(`${Base_Url}/api/v1/employee/${id}`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
 
         if (response.data.success) {
           const employee = response.data.employee;
@@ -97,7 +94,9 @@ const EmployeeEdit = () => {
     <>
       {departments && employee ? (
         <div className="max-w-4xl mx-auto mt-10 bg-white p-8 rounded-md shadow-md">
-          <h2 className="text-2xl font-bold mb-6">Update Employee</h2>
+          <h2 className="text-4xl font-bold text-center text-teal-700 mb-8">
+            Update Employee
+          </h2>
           <form onSubmit={handleSubmit}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>

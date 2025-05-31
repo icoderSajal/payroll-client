@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import axios from "axios";
 import toast from "react-hot-toast";
-
+import { Base_Url } from "../../service/Endpoints";
 const AddEmployeeLeaves = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
@@ -24,7 +24,7 @@ const AddEmployeeLeaves = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "https://payroll-server-1.onrender.com/api/v1/leave/add",
+        `${Base_Url}/api/v1/leave/add`,
         formData,
         {
           headers: {
@@ -47,7 +47,7 @@ const AddEmployeeLeaves = () => {
   return (
     <div className="max-w-3xl mx-auto mt-12 px-4 sm:px-6 lg:px-8">
       <div className="bg-white shadow-md rounded-lg p-8">
-        <h2 className="text-3xl font-semibold text-gray-800 mb-8 text-center">
+        <h2 className="text-4xl font-bold text-center text-teal-700 mb-8">
           Leave Request Form
         </h2>
         <form onSubmit={handleSubmit} className="space-y-6">

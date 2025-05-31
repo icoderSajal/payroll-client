@@ -4,6 +4,7 @@ import { colums, DepartmentButtons } from "../../utils/Departmenthelper";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { Base_Url } from "../../service/Endpoints";
 
 const DepartmentList = () => {
   const [departments, setDepartments] = useState([]);
@@ -16,14 +17,11 @@ const DepartmentList = () => {
   const fetchDepartment = async () => {
     setDepLoading(true);
     try {
-      const response = await axios.get(
-        "https://payroll-server-1.onrender.com/api/v1/department",
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
+      const response = await axios.get(`${Base_Url}/api/v1/department`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
       if (response.data.success) {
         let sno = 1;
         const data = await response.data.departments.map((dep) => ({
@@ -66,7 +64,9 @@ const DepartmentList = () => {
       ) : (
         <div className="p-5">
           <div className="text-center">
-            <h3 className="font-bold text-2xl">Manage Departments</h3>
+            <h3 className="text-4xl font-bold text-center text-teal-700 mb-8">
+              Manage Departments
+            </h3>
           </div>
           <div className="flex justify-between items-center">
             <input

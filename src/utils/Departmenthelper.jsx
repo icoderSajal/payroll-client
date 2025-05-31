@@ -1,6 +1,7 @@
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { Base_Url } from "../service/Endpoints";
 
 // Table columns
 export const colums = [
@@ -30,7 +31,7 @@ export const DepartmentButtons = ({ Id, onDepartmentDelete }) => {
 
     try {
       const response = await axios.delete(
-        `https://payroll-server-1.onrender.com/api/v1/department/${Id}`,
+        `${Base_Url}/api/v1/department/${Id}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,

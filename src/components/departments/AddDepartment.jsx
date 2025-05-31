@@ -2,6 +2,7 @@ import React from "react";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { Base_Url } from "../../service/Endpoints";
 const AddDepartment = () => {
   const [department, setdepartment] = React.useState({
     dep_name: "",
@@ -16,7 +17,7 @@ const AddDepartment = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "https://payroll-server-1.onrender.com/api/v1/department/add",
+        `${Base_Url}/api/v1/department/add`,
         department,
         {
           headers: {
@@ -37,7 +38,9 @@ const AddDepartment = () => {
   };
   return (
     <div className="max-w-3xl  mx-auto mt-10 bg-amber-50 p-8 rounded-md  shadow-md w-96">
-      <h3 className="text-2xl font-bold mb-6">Add Departments</h3>
+      <h3 className="text-4xl font-bold text-center text-teal-700 mb-8">
+        Add Departments
+      </h3>
 
       <form className="" onSubmit={handleSubmit}>
         <div className="">

@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-
 import axios from "axios";
 import toast from "react-hot-toast";
 import { getAllEmployees } from "../../utils/EmployeeHelper";
+import {Base_Url} from "../../service/Endpoints"
 
 const AddEmployeeTask = () => {
   const navigate = useNavigate();
@@ -35,7 +35,7 @@ const AddEmployeeTask = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:8000/api/v1/task/add",
+        `${Base_Url}/api/v1/task/add`,
         formData,
         {
           headers: {

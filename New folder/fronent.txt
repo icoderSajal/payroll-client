@@ -1,0 +1,6 @@
+https://payroll-server-1.onrender.com/ api 
+
+frontend 
+https://animated-medovik-e4dd72.netlify.app/
+
+{userId:"683a8f0a526f0929f880f9c9",employeeId:"Emp-001",name:"Test User",loginTime:"2025-05-31T05:28:41.867+00:00",logoutTime:"",hoursWorked:0,status:"Present"}

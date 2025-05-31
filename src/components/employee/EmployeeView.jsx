@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
-
+import { Base_Url } from "../../service/Endpoints";
 const EmployeeView = () => {
   const [employee, setEmployee] = useState(null);
   const { id } = useParams();
@@ -11,14 +11,11 @@ const EmployeeView = () => {
   useEffect(() => {
     const fetchEmployee = async () => {
       try {
-        const response = await axios.get(
-          `https://payroll-server-1.onrender.com/api/v1/employee/${id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-          }
-        );
+        const response = await axios.get(`${Base_Url}/api/v1/employee/${id}`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
 
         if (response.data.success) {
           setEmployee(response.data.employee);
@@ -57,14 +54,14 @@ const EmployeeView = () => {
 
   return (
     <div className="max-w-5xl mx-auto p-4 sm:p-8 mt-10 bg-white shadow-lg rounded-lg">
-      <h2 className="text-3xl font-bold text-center text-gray-800 mb-10">
+      <h2 className="text-4xl font-bold text-center text-teal-700 mb-8">
         Employee Details
       </h2>
       <div className="flex flex-col md:flex-row items-center gap-10">
         <div className="w-full md:w-1/2 flex justify-center">
           <img
             alt="Profile"
-            src={`http://localhost:8000/${employee?.userId?.profileImage}`}
+            src={`${Base_Url}/${employee?.userId?.profileImage}`}
             className="rounded-full shadow-md w-60 h-60 object-cover"
           />
         </div>

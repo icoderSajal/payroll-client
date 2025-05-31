@@ -13,6 +13,7 @@ import {
 import axios from "axios";
 import toast from "react-hot-toast";
 import AttendancePieChart from "../charts/AttendancePieChart";
+import { Base_Url } from "../../service/Endpoints";
 
 const AdminSummary = () => {
   const [summary, setSummary] = useState(null);
@@ -22,7 +23,7 @@ const AdminSummary = () => {
     const fetchAttendanceData = async () => {
       try {
         const response = await axios.get(
-          "https://payroll-server-1.onrender.com/api/v1/admin-report/get",
+          `${{ Base_Url }}/api/v1/admin-report/get`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -43,7 +44,7 @@ const AdminSummary = () => {
     const fetchSummary = async () => {
       try {
         const summary = await axios.get(
-          "https://payroll-server-1.onrender.com/api/v1/dashboard/summary",
+          `${Base_Url}/api/v1/dashboard/summary`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -68,7 +69,7 @@ const AdminSummary = () => {
   }
   return (
     <div className="p-4 md:p-6 lg:p-8 w-full">
-      <h3 className="text-3xl font-bold text-center md:text-left text-gray-800 mb-8">
+      <h3 className="text-4xl font-bold text-center text-teal-700 mb-8">
         Dashboard Overview
       </h3>
 
@@ -96,7 +97,7 @@ const AdminSummary = () => {
 
       {/* Leave Details */}
       <div className="mt-16">
-        <h3 className="text-2xl font-semibold text-center text-gray-800">
+        <h3 className="text-4xl font-bold text-center text-teal-700 mb-8">
           Leave Details
         </h3>
 

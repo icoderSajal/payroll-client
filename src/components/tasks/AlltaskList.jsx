@@ -4,6 +4,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { colums, TaskButtons } from "../../utils/TasksHelper";
 import { Link } from "react-router-dom";
+import { Base_Url } from "../../service/Endpoints";
 
 const AlltaskList = () => {
   const [tasks, setTasks] = useState([]);
@@ -13,7 +14,7 @@ const AlltaskList = () => {
   const fetchTasks = async () => {
     setLoading(true); // Start loading
     try {
-      const response = await axios.get("http://localhost:8000/api/v1/task", {
+      const response = await axios.get(`${Base_Url}/api/v1/task`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -72,7 +73,9 @@ const AlltaskList = () => {
       ) : (
         <>
           <div className="text-center mb-6">
-            <h3 className="font-bold text-2xl md:text-3xl">Task Management</h3>
+            <h3 className="text-4xl font-bold text-center text-teal-700 mb-8">
+              Task Management
+            </h3>
           </div>
 
           <div className="flex flex-col md:flex-row md:justify-between items-center gap-4 mb-5">

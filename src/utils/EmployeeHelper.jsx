@@ -1,18 +1,16 @@
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { Base_Url } from "../service/Endpoints";
 
 export const fetchDepartments = async () => {
   let departments;
   try {
-    const response = await axios.get(
-      "https://payroll-server-1.onrender.com/api/v1/department",
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      }
-    );
+    const response = await axios.get(`${Base_Url}/api/v1/department`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
     if (response.data.success) {
       departments = response.data.departments;
     }
@@ -28,7 +26,7 @@ export const getEmployees = async (id) => {
   let employees;
   try {
     const response = await axios.get(
-      `https://payroll-server-1.onrender.com/api/v1/employee/department/${id}`,
+      `${Base_Url}/api/v1/employee/department/${id}`,
       {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -49,14 +47,11 @@ export const getEmployees = async (id) => {
 export const getAllEmployees = async () => {
   let employees;
   try {
-    const response = await axios.get(
-      "https://payroll-server-1.onrender.com/api/v1/employee",
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      }
-    );
+    const response = await axios.get(`${Base_Url}/api/v1/employee`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
     if (response.data.success) {
       employees = response.data.employees;
     }

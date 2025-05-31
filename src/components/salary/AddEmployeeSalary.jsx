@@ -4,7 +4,7 @@ import { fetchDepartments, getEmployees } from "../../utils/EmployeeHelper";
 
 import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
-
+import { Base_Url } from "../../service/Endpoints";
 const AddEmployeeSalary = () => {
   const [salary, setSalary] = useState({
     employeeId: null,
@@ -45,7 +45,7 @@ const AddEmployeeSalary = () => {
 
     try {
       const response = await axios.post(
-        "https://payroll-server-1.onrender.com/salary/add/",
+        `${Base_Url}/api/v1/salary/add`,
         salary,
         {
           headers: {
@@ -68,7 +68,9 @@ const AddEmployeeSalary = () => {
     <>
       {departments ? (
         <div className="max-w-4xl mx-auto mt-10 bg-white p-8 rounded-md shadow-md">
-          <h2 className="text-2xl font-bold mb-6">Add Employee Salary</h2>
+          <h2 className="text-4xl font-bold text-center text-teal-700 mb-8">
+            Add Employee Salary
+          </h2>
           <form onSubmit={handleSubmit}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {/* Department */}

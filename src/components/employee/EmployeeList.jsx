@@ -4,7 +4,7 @@ import DataTable from "react-data-table-component";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { colums, EmployeeButtons } from "../../utils/EmployeeHelper";
-
+import { Base_Url } from "../../service/Endpoints";
 const EmployeeList = () => {
   const [employees, setEmployees] = useState([]);
   const [filteredEmployees, setFilteredEmployees] = useState([]);
@@ -24,14 +24,11 @@ const EmployeeList = () => {
     const fetchEmployees = async () => {
       setLoading(true);
       try {
-        const { data } = await axios.get(
-          "https://payroll-server-1.onrender.com/api/v1/employee",
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-          }
-        );
+        const { data } = await axios.get(`${Base_Url}/api/v1/employee`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
         console.log(data.success.employees);
         if (data.success) {
           let sno = 1;
@@ -45,7 +42,7 @@ const EmployeeList = () => {
               <img
                 className="rounded-full"
                 width={40}
-                src={`https://payroll-server-1.onrender.com/${emp.userId.profileImage}`}
+                src={`${Base_Url}/${emp.userId.profileImage}`}
                 alt={`${emp.userId.name}'s profile`}
               />
             ),
@@ -73,7 +70,9 @@ const EmployeeList = () => {
       ) : (
         <>
           <div className="text-center mb-6">
-            <h3 className="font-bold text-2xl md:text-3xl">Manage Employees</h3>
+            <h3 className="text-4xl font-bold text-center text-teal-700 mb-8">
+              Manage Employees
+            </h3>
           </div>
 
           <div className="flex flex-col md:flex-row md:justify-between items-center gap-4 mb-5">

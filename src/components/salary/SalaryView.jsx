@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useParams } from "react-router-dom";
+import { Base_Url } from "../../service/Endpoints";
 
 const SalaryView = () => {
   const [salaries, setSalaries] = useState([]);
@@ -10,14 +11,11 @@ const SalaryView = () => {
 
   const fetchSalaries = async () => {
     try {
-      const response = await axios.get(
-        `https://payroll-server-1.onrender.com/api/v1/salary/${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
+      const response = await axios.get(`${Base_Url}/api/v1/salary/${id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
       if (response.data.success) {
         setSalaries(response.data.salaries);
         setFilteredSalaries(response.data.salaries);
@@ -48,7 +46,9 @@ const SalaryView = () => {
       ) : (
         <div className="overflow-x-auto p-5">
           <div className="text-center">
-            <h2 className="text-2xl font-bold">Employee Salary History</h2>
+            <h2 className="text-4xl font-bold text-center text-teal-700 mb-8">
+              Employee Salary History
+            </h2>
           </div>
           <div className="flex justify-end my-3">
             <input

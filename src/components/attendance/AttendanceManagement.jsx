@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { fetchDepartments, getEmployees } from "../../utils/EmployeeHelper";
-
+import { Base_Url } from "../../service/Endpoints";
 import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -45,7 +45,7 @@ const AttendanceManagement = () => {
 
     try {
       const response = await axios.post(
-        "https://payroll-server-1.onrender.com/api/v1/salary/add/",
+        `${Base_Url}/api/v1/salary/add/`,
         salary,
         {
           headers: {
