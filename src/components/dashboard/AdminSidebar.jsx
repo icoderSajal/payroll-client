@@ -53,7 +53,7 @@ const AdminSidebar = () => {
       label: "Task Manager",
     },
     {
-      to: "/admin-dashboard/salary/add",
+      to: "/admin-dashboard/employees/salaries",
       icon: <FaMoneyBillWave size={22} />,
       label: "Salary",
     },
