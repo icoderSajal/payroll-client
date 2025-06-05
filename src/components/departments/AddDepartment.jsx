@@ -17,7 +17,7 @@ const AddDepartment = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        `${Base_Url}/api/v1/department/add`,
+        `https://payroll-server-1.onrender.com/api/v1/department/add`,
         department,
         {
           headers: {

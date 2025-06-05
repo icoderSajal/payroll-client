@@ -16,10 +16,13 @@ const Login = () => {
     //https://payroll-server-1.onrender.com/api/v1/auth/login
 
     try {
-      const response = await axios.post(`${Base_Url}/api/v1/auth/login`, {
-        email,
-        password,
-      });
+      const response = await axios.post(
+        `https://payroll-server-1.onrender.com/api/v1/auth/login`,
+        {
+          email,
+          password,
+        }
+      );
 
       if (response.data.success) {
         login(response.data.user);

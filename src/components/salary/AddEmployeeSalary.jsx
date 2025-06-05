@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { fetchDepartments, getEmployees } from "../../utils/EmployeeHelper";
-
 import toast from "react-hot-toast";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, Link } from "react-router-dom";
 import { Base_Url } from "../../service/Endpoints";
 const AddEmployeeSalary = () => {
   const [salary, setSalary] = useState({
@@ -168,12 +167,20 @@ const AddEmployeeSalary = () => {
                 />
               </div>
             </div>
-            <button
-              type="submit"
-              className="w-full mt-6 font-bold bg-teal-500 text-white py-2.5 px-4 rounded hover:bg-teal-900 hover:ring-2 transition-all duration-300"
-            >
-              Add Salary
-            </button>
+            <div className="flex justify-end gap-4 items-center mt-5">
+              <button
+                type="submit"
+                className="bg-teal-600 text-white px-2 py-2 font-bold rounded-lg hover:bg-teal-800 transition duration-300"
+              >
+                Add Salary
+              </button>
+              <Link
+                className="bg-teal-600 text-white px-2 py-2 font-bold rounded-lg hover:bg-teal-800 transition duration-300"
+                to="/admin-dashboard/employees/salaries"
+              >
+                Back
+              </Link>
+            </div>
           </form>
         </div>
       ) : (

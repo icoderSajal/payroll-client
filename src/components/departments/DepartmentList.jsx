@@ -17,11 +17,14 @@ const DepartmentList = () => {
   const fetchDepartment = async () => {
     setDepLoading(true);
     try {
-      const response = await axios.get(`${Base_Url}/api/v1/department`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
+      const response = await axios.get(
+        `https://payroll-server-1.onrender.com/api/v1/department`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
       if (response.data.success) {
         let sno = 1;
         const data = await response.data.departments.map((dep) => ({
