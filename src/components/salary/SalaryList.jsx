@@ -8,10 +8,10 @@ import { Base_Url } from "../../service/Endpoints";
 
 const SalaryList = () => {
   const [salaries, setSalaries] = useState([]);
-  const [salLoading, setSalLoading] = useState(false);
-  const [fitersalaries, setFiltersalaries] = useState([]);
+  const [salLoading, setSalLoading] = useState(true);
+  const [filteredSalaries, setFilteredSalaries] = useState([]);
 
-  const fetchDepartment = async () => {
+  const fetchSalaries = async () => {
     setSalLoading(true);
     try {
       const response = await axios.get(`${Base_Url}/api/v1/salary`, {
@@ -19,10 +19,10 @@ const SalaryList = () => {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
-      //console.log(response.data.salaries);
+
       if (response.data.success) {
         let sno = 1;
-        const data = await response.data.salaries.map((sal) => ({
+        const data = response.data.salaries.map((sal) => ({
           _id: sal._id,
           sno: sno++,
           employeeId: sal.employeeId.employeeId,
@@ -32,35 +32,67 @@ const SalaryList = () => {
           netSalary: sal.netSalary,
         }));
 
-        setSalaries(data);
-        setFiltersalaries(data);
+        // Simulate a 2-second loading effect
+        setTimeout(() => {
+          setSalaries(data);
+          setFilteredSalaries(data);
+          setSalLoading(false);
+        }, 2000);
       }
     } catch (error) {
-      if (error.response && !error.response.data.success) {
-        toast.error(error.response.data.error);
-      }
-    } finally {
       setSalLoading(false);
+      toast.error(error.response?.data?.error || "Failed to fetch salary data");
     }
   };
 
-  //get department data
   useEffect(() => {
-    fetchDepartment();
+    fetchSalaries();
   }, []);
-  
 
   const filterSalaries = (e) => {
-    const data = salaries.filter((sal) =>
-      sal.employeeId.toLowerCase().includes(e.target.value.toLowerCase())
+    const value = e.target.value.toLowerCase();
+    const filtered = salaries.filter((sal) =>
+      sal.employeeId.toLowerCase().includes(value)
     );
-
-    setFiltersalaries(data);
+    setFilteredSalaries(filtered);
   };
+
   return (
     <>
       {salLoading ? (
-        <div>Loading...</div>
+        <div className="p-5 animate-pulse">
+          <div className="text-center mb-8">
+            <div className="h-8 w-64 mx-auto bg-gray-200 rounded-lg"></div>
+          </div>
+          <div className="flex justify-between items-center mb-4">
+            <div className="h-10 w-1/3 bg-gray-200 rounded-lg"></div>
+            <div className="h-10 w-24 bg-gray-200 rounded-lg"></div>
+          </div>
+          <div className="overflow-x-auto bg-white rounded-xl shadow-md mt-4">
+            <table className="min-w-full">
+              <thead>
+                <tr className="h-12">
+                  {[...Array(6)].map((_, i) => (
+                    <th key={i} className="px-4 py-2">
+                      <div className="h-4 w-20 bg-gray-200 rounded"></div>
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {[...Array(6)].map((_, i) => (
+                  <tr key={i} className="border-b h-12">
+                    {[...Array(6)].map((_, j) => (
+                      <td key={j} className="px-4 py-2">
+                        <div className="h-4 w-full bg-gray-100 rounded"></div>
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
       ) : (
         <div className="p-5">
           <div className="text-center">
@@ -70,10 +102,10 @@ const SalaryList = () => {
           </div>
           <div className="flex justify-between items-center">
             <input
-              placeholder="Search By Department"
+              placeholder="Search by Employee ID"
               type="text"
               onChange={filterSalaries}
-              className="px-4 py-1 shadow-2xl h-12  border border-gray-300 rounded-2xl "
+              className="px-4 py-1 shadow-2xl h-12 border border-gray-300 rounded-2xl"
             />
             <Link
               to="/admin-dashboard/salary/add"
@@ -83,7 +115,7 @@ const SalaryList = () => {
             </Link>
           </div>
           <div className="overflow-x-auto bg-white rounded-xl shadow-md mt-4">
-            <DataTable columns={colums} data={fitersalaries} pagination />
+            <DataTable columns={colums} data={filteredSalaries} pagination />
           </div>
         </div>
       )}

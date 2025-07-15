@@ -3,11 +3,12 @@ import axios from "axios";
 import { fetchDepartments } from "../../utils/EmployeeHelper";
 import { Base_Url } from "../../service/Endpoints";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const AddEmployee = () => {
   const [departments, setDepartments] = useState([]);
   const [formData, setFormData] = useState([]);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   useEffect(() => {
     const getDepartments = async () => {
@@ -54,9 +55,9 @@ const AddEmployee = () => {
     }
   };
   return (
-    <div className="max-w-4xl mx-auto mt-10 bg-white p-8 rounded-md shadow-md">
-      <h2 className="text-4xl font-bold text-center text-teal-700 mb-8">
-        Add New Employee
+    <div className="max-w-4xl mx-auto mt-10 bg-[#000000000] backdrop-blur p-8 rounded-md shadow-xl">
+      <h2 className="text-4xl font-bold text-center text-teal-100 mb-8">
+        Add New User
       </h2>
       <form onSubmit={handleSubmit}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -187,19 +188,7 @@ const AddEmployee = () => {
               required
             />
           </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Password
-            </label>
-            <input
-              placeholder="******"
-              type="password"
-              onChange={handleChange}
-              name="password"
-              className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
-              required
-            />
-          </div>
+
           <div>
             <label className="block text-sm font-medium text-gray-700">
               Role
@@ -212,8 +201,11 @@ const AddEmployee = () => {
             >
               <option value="">Select Role</option>
               <option value="admin">Admin</option>
+              <option value="voyager">Voyager</option>
+              <option value="manager">Manager</option>
+              <option value="headcook">Headcook</option>
+              <option value="supervisor">Supervisor</option>
 
-              <option value="employee">Employee</option>
             </select>
           </div>
           <div>
@@ -231,12 +223,51 @@ const AddEmployee = () => {
             />
           </div>
         </div>
-        <button
-          type="submit"
-          className="w-full mt-6 font-bold bg-teal-500 text-white py-2.5 px-4 rounded hover:bg-teal-900 hover:ring-2 transition-all duration-300"
-        >
-          Add Employee
-        </button>
+        <div className="flex justify-end gap-4 items-center mt-5">
+
+
+
+          <button
+            type="submit"
+            disabled={loading}
+            className="bg-teal-500 text-white px-6 py-2 font-bold rounded-lg hover:bg-teal-800 transition duration-300 uppercase"
+          >
+            {loading ? (
+              <>
+                <svg
+                  className="animate-spin h-5 w-5 text-white"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  ></circle>
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                  ></path>
+                </svg>
+                Loading...
+              </>
+            ) : (
+              "Save"
+            )}
+
+          </button>
+          <Link
+            className="bg-teal-500 text-white px-6 py-2 font-bold rounded-lg hover:bg-teal-800 transition duration-300 uppercase"
+            to="/admin-dashboard/employees"
+          >
+            Back
+          </Link>
+        </div>
       </form>
     </div>
   );

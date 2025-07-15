@@ -96,13 +96,6 @@ const EmployeeSetting = () => {
             Submit
           </button>
 
-          <button
-            type="button"
-            className="w-full mt-6 font-bold bg-teal-500 text-white py-2.5 px-4 rounded hover:bg-teal-900 hover:ring-2 transition-all duration-300"
-            onClick={() => navigate(`/employee-dashboard`)}
-          >
-            Back
-          </button>
         </div>
       </form>
     </div>

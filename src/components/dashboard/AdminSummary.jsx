@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import SummaryCards from "./SummaryCards";
-import { Bar, Pie, Line } from "react-chartjs-2";
+import { Bar } from "react-chartjs-2";
 import {
   FaBuilding,
   FaCheckCircle,
@@ -26,7 +26,6 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { Base_Url } from "../../service/Endpoints";
 import EmployeeBarChart from "../charts/EmployeeBarChart";
-import LeaveStatusChart from "../charts/LeaveStatusChart";
 
 ChartJS.register(
   BarElement,
@@ -41,63 +40,57 @@ ChartJS.register(
 
 const AdminSummary = () => {
   const [summary, setSummary] = useState(null);
+  const [loading, setLoading] = useState(true); // 🔹 loader state
 
-  // useEffect(() => {
-  //   const fetchAttendanceData = async () => {
-  //     try {
-  //       const response = await axios.get(
-  //         `${{ Base_Url }}/api/v1/admin-report/get`,
-  //         {
-  //           headers: {
-  //             Authorization: `Bearer ${localStorage.getItem("token")}`,
-  //           },
-  //         }
-  //       );
-  //       if (response.data.success) {
-  //         setAttendanceData(response.data.atts);
-  //       }
-  //     } catch (error) {
-  //       toast.error("Failed to fetch attendance data");
-  //     }
-  //   };
-
-  //   fetchAttendanceData();
-  // }, []);
   useEffect(() => {
     const fetchSummary = async () => {
-      try {
-        const summary = await axios.get(
-          `${Base_Url}/api/v1/dashboard/summary`,
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
+      setLoading(true);
+      setTimeout(async () => {
+        try {
+          const summary = await axios.get(
+            `${Base_Url}/api/v1/dashboard/summary`,
+            {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+              },
+            }
+          );
+          setSummary(summary.data);
+        } catch (error) {
+          if (error.response?.data?.error) {
+            toast.error(error.response.data.error);
+          } else {
+            console.log(error.message);
           }
-        );
-        console.log(summary.data);
-        setSummary(summary.data);
-      } catch (error) {
-        if (error.response.data.error) {
-          toast.error(error.response.data.error);
-        } else {
-          console.log(error.message);
+        } finally {
+          setLoading(false);
         }
-      }
+      }, 2000); // 2-second delay
     };
+
     fetchSummary();
   }, []);
 
-  if (!summary) {
-    return <div>Loading...</div>;
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <div className="flex flex-col items-center">
+          <div className="w-12 h-12 border-4 border-teal-600 border-t-transparent rounded-full animate-spin"></div>
+          <p className="mt-4 text-teal-700 font-semibold">
+            Loading dashboard...
+          </p>
+        </div>
+      </div>
+    );
   }
+
   return (
     <>
-      <div className="mt-20">
+      {/*<div className="mt-20">
         <h3 className="text-4xl font-bold text-center text-teal-700 mb-8">
           Dashboard Overview
         </h3>
 
-        {/* Top Summary Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           <SummaryCards
             icons={<FaUsers />}
@@ -120,21 +113,17 @@ const AdminSummary = () => {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 mt-10">
-          {/* Total Employees Bar Chart */}
           <div className="bg-white p-6 shadow rounded-lg">
             <h4 className="text-xl font-semibold mb-4 text-center">
               Total Employees
             </h4>
-
             <EmployeeBarChart />
           </div>
 
-          {/* Total Departments Bar Chart */}
           <div className="bg-white p-6 shadow rounded-lg">
             <h4 className="text-xl font-semibold mb-4 text-center">
               Leave Summary
             </h4>
-
             <Bar
               data={{
                 labels: ["Approved", "Pending", "Rejected"],
@@ -165,8 +154,8 @@ const AdminSummary = () => {
           </div>
         </div>
       </div>
+
       <div className="p-4 md:p-6 lg:p-8 w-full">
-        {/* Leave Details */}
         <div className="mt-16">
           <h3 className="text-4xl font-bold text-center text-teal-700 mb-8">
             Leave Details
@@ -199,7 +188,8 @@ const AdminSummary = () => {
             />
           </div>
         </div>
-      </div>
+      </div>*/}
+      <div>Data</div>
     </>
   );
 };

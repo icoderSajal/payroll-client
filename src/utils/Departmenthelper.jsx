@@ -2,6 +2,7 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Base_Url } from "../service/Endpoints";
+import { Trash2, Pencil } from "lucide-react"
 
 // Table columns
 export const colums = [
@@ -66,7 +67,7 @@ export const DepartmentButtons = ({ Id, onDepartmentDelete }) => {
       <button
         type="button"
         onClick={() => handleDelete(Id)}
-        className="px-3 py-1 rounded bg-red-700 text-white hover:bg-red-950 transition-all duration-300"
+        className=" px-3 py-1 rounded bg-red-700 text-white  hover:bg-red-950 transition-all duration-300"
       >
         Delete
       </button>

@@ -93,16 +93,22 @@ const EmployeeTaskList = () => {
                     </td>
                     <td className="px-6 py-3">{tks.comments}</td>
                     <td className="px-6 py-3">{tks.status}</td>
-                    <td className="px-6 py-3">
-                      <button
-                        onClick={() =>
-                          navigate(`/employee-dashboard/task/detail/${tks._id}`)
-                        }
-                        className="px-4 py-1 bg-teal-500 rounded-lg text-white font-bold hover:bg-teal-700"
-                      >
-                        View
-                      </button>
-                    </td>
+                    {tks.status === "Completed" ? (
+                      <td className="px-6 py-3">❌</td>
+                    ) : (
+                      <td className="px-6 py-3">
+                        <button
+                          onClick={() =>
+                            navigate(
+                              `/employee-dashboard/task/detail/${tks._id}`
+                            )
+                          }
+                          className="px-4 py-1 bg-teal-500 rounded-lg text-white font-bold hover:bg-teal-700"
+                        >
+                          View
+                        </button>
+                      </td>
+                    )}
                   </tr>
                 ))}
               </tbody>

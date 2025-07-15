@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { getAllEmployees } from "../../utils/EmployeeHelper";
-import {Base_Url} from "../../service/Endpoints"
+import { Base_Url } from "../../service/Endpoints";
 
 const AddEmployeeTask = () => {
   const navigate = useNavigate();
@@ -70,6 +70,7 @@ const AddEmployeeTask = () => {
               >
                 Select Employee
               </label>
+              {/* {JSON.stringify(employees)} */}
               <select
                 className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
                 name="employeeId"
@@ -79,7 +80,7 @@ const AddEmployeeTask = () => {
                 <option value="">--Select Employee--</option>
                 {employees?.map((emp) => (
                   <option key={emp._id} value={emp._id}>
-                    {emp.employeeId}
+                    {emp.employeeId} - {emp.userId.name}
                   </option>
                 ))}
               </select>

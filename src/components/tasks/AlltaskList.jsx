@@ -9,39 +9,42 @@ import { Base_Url } from "../../service/Endpoints";
 const AlltaskList = () => {
   const [tasks, setTasks] = useState([]);
   const [filteredTasks, setFilteredTasks] = useState([]);
-  const [loading, setLoading] = useState(true); // 🔹 Loading state
+  const [loading, setLoading] = useState(true);
 
   const fetchTasks = async () => {
-    setLoading(true); // Start loading
-    try {
-      const response = await axios.get(`${Base_Url}/api/v1/task`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
+    setLoading(true);
 
-      if (response.data.success) {
-        let sno = 1;
-        const taskdata = response.data.tasks.map((task) => ({
-          _id: task._id,
-          sno: sno++,
-          employeeId: task.employeeId?.employeeId,
-          name: task.employeeId?.userId?.name,
-          taskType: task.taskType,
-          startDate: new Date(task.startDate).toLocaleDateString(),
-          endDate: new Date(task.endDate).toLocaleDateString(),
-          status: task.status,
-          action: <TaskButtons Id={task._id} />,
-        }));
+    setTimeout(async () => {
+      try {
+        const response = await axios.get(`${Base_Url}/api/v1/task`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
 
-        setTasks(taskdata);
-        setFilteredTasks(taskdata);
+        if (response.data.success) {
+          let sno = 1;
+          const taskdata = response.data.tasks.map((task) => ({
+            _id: task._id,
+            sno: sno++,
+            employeeId: task.employeeId?.employeeId,
+            name: task.employeeId?.userId?.name,
+            taskType: task.taskType,
+            startDate: new Date(task.startDate).toLocaleDateString(),
+            endDate: new Date(task.endDate).toLocaleDateString(),
+            status: task.status,
+            action: <TaskButtons Id={task._id} />,
+          }));
+
+          setTasks(taskdata);
+          setFilteredTasks(taskdata);
+        }
+      } catch (error) {
+        toast.error(error.response?.data?.error || "Failed to Fetch Tasks");
+      } finally {
+        setLoading(false);
       }
-    } catch (error) {
-      toast.error(error.response?.data?.error || "Failed to Fetch Tasks");
-    } finally {
-      setLoading(false); // Stop loading
-    }
+    }, 2000); // Delay for smoother loading effect
   };
 
   useEffect(() => {
@@ -65,10 +68,12 @@ const AlltaskList = () => {
 
   return (
     <div className="p-4 md:p-6 lg:p-8 max-w-7xl mx-auto">
-      {loading ? ( // 🔹 Show loading state
-        <div className="text-center py-10">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-teal-600 mx-auto mb-4"></div>
-          <p className="text-gray-700 font-semibold">Loading tasks...</p>
+      {loading ? (
+        <div className="flex items-center justify-center h-screen">
+          <div className="flex flex-col items-center">
+            <div className="w-12 h-12 border-4 border-teal-600 border-t-transparent rounded-full animate-spin"></div>
+            <p className="mt-4 text-teal-700 font-semibold">Loading tasks...</p>
+          </div>
         </div>
       ) : (
         <>

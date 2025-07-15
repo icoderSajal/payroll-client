@@ -13,24 +13,32 @@ import EmployeeList from "./components/employee/EmployeeList";
 import AddEmployee from "./components/employee/AddEmployee";
 import EmployeeView from "./components/employee/EmployeeView";
 import EmployeeEdit from "./components/employee/EmployeeEdit";
-import SalaryView from "./components/salary/SalaryView";
-import AddEmployeeSalary from "./components/salary/AddEmployeeSalary";
 import EmployeeSummary from "./components/employeedashboard/EmployeeSummary";
-import EmployeeLeavesList from "./components/leaves/EmployeeLeavesList";
-import AddEmployeeLeaves from "./components/leaves/AddEmployeeLeaves";
-import EmployeeSetting from "./components/employeeSetting/EmployeeSetting";
-import LeaveManagement from "./components/leaves/LeaveManagement";
-import LeaveDetails from "./components/leaves/LeaveDetails";
-import EmployeeAttendance from "./components/attendance/EmployeeAttendance";
-import AttendanceManagement from "./components/attendance/AttendanceManagement";
-import AttendanceReport from "./components/reports/AttendanceReport";
-import AddAttendance from "./components/attendance/AddAttendance";
-import AddEmployeeTask from "./components/tasks/AddEmployeeTask";
-import EmployeeTaskList from "./components/tasks/EmployeeTaskList";
-import AlltaskList from "./components/tasks/AlltaskList";
-import EmployeeTaskDetails from "./components/tasks/EmployeeTaskDetails";
-import EditEmployeeTask from "./components/tasks/EditEmployeeTask";
-import SalaryList from "./components/salary/SalaryList";
+import HeadCookSummary from "./components/headcookdashboard/HeadCookSummary";
+import HeadCookDashboard from "./pages/HeadCook/HeadCookDashboard";
+import ManagerDashboard from "./pages/Manager/ManagerDashboard";
+import ManagerSummary from "./components/manager/ManagerSummary";
+import VoyagerDashboard from "./pages/Voyager/VoyagerDashboard";
+import VoyagerSummary from "./components/voyagers/VoyagerSummary";
+import UnauthorizedPage from "./pages/UnauthorizedPage";
+import AddMenus from "./components/menus/AddMenus";
+import Item from "./components/menusitems/Item";
+import AddTickets from "./components/tickets/AddTickets";
+import StationeryOrderList from "./components/stationery/StationeryOrderList";
+import CateringOrderList from "./components/catering/CateringOrderList";
+import AdminMovieForm from "./components/tickets/AdminMovieForm";
+import Orders from "./components/voyagers/Orders";
+import OrderSummaryPage from "./components/voyagers/OrderSummaryPage";
+import OrderSuccessPage from "./components/voyagers/OrderSuccessPage";
+import ViewOrdersPage from "./components/voyagers/ViewOrdersPage";
+import OrderList from "./components/orders/OrderList";
+import OrderListById from "./components/orders/OrderListById";
+import TicketBookingModel from "./components/tickets/TicketBookingModal"
+import UserTicketBookingPage from "./components/tickets/UserTicketBookingPage";
+import BookingList from "./components/tickets/BookingList";
+import SalonBookingPage from "./components/salon/SalonBookingPage";
+import CreateSalonPage from "./components/salon/CreateSalonPage";
+
 
 const App = () => {
   return (
@@ -40,6 +48,9 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Navigate to="/admin-dashboard" />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/unauthorized" element={<UnauthorizedPage />} />
+
+          {/* admin routes */}
           <Route
             path="/admin-dashboard"
             element={
@@ -63,78 +74,44 @@ const App = () => {
               path="/admin-dashboard/department/:id"
               element={<EditDepartment />}
             ></Route>
+
             <Route
-              path="/admin-dashboard/employees"
-              element={<EmployeeList />}
-            ></Route>
-            <Route
-              path="/admin-dashboard/add-employee"
-              element={<AddEmployee />}
-            ></Route>
-            <Route
-              path="/admin-dashboard/employee/:id"
-              element={<EmployeeView />}
-            ></Route>
-            <Route
-              path="/admin-dashboard/employee/edit/:id"
-              element={<EmployeeEdit />}
-            ></Route>
-            <Route
-              path="/admin-dashboard/employees/salaries"
-              element={<SalaryList />}
-            ></Route>
-            <Route
-              path="/admin-dashboard/employees/salary/:id"
-              element={<SalaryView />}
-            ></Route>
-            <Route
-              path="/admin-dashboard/salary/add"
-              element={<AddEmployeeSalary />}
-            ></Route>
-            <Route
-              path="/admin-dashboard/leaves"
-              element={<LeaveManagement />}
-            ></Route>
-            <Route
-              path="/admin-dashboard/setting/:id"
-              element={<EmployeeSetting />}
-            ></Route>
-            <Route
-              path="/admin-dashboard/leave/detail/:id"
-              element={<LeaveDetails />}
-            ></Route>
-            <Route
-              path="/admin-dashboard/employees/leaves/:id"
-              element={<EmployeeLeavesList />}
-            ></Route>
-            <Route
-              path="/admin-dashboard/attendance"
-              element={<AddAttendance />}
-            ></Route>
-            <Route
-              path="/admin-dashboard/reports"
-              element={<AttendanceReport />}
+              path="/admin-dashboard/menus"
+              element={<AddMenus />}
             ></Route>
 
             <Route
-              path="/admin-dashboard/task"
-              element={<AlltaskList />}
+              path="/admin-dashboard/items"
+              element={<Item />}
             ></Route>
             <Route
-              path="/admin-dashboard/task/add"
-              element={<AddEmployeeTask />}
+              path="/admin-dashboard/tickets"
+              element={<AdminMovieForm />}
+            ></Route>
+
+            <Route
+              path="/admin-dashboard/fitness"
+              element={<AddTickets />}
+            ></Route>
+
+            <Route
+              path="/admin-dashboard/parties"
+              element={<AdminMovieForm />}
             ></Route>
             <Route
-              path="/admin-dashboard/task/:id"
-              element={<EditEmployeeTask />}
+              path="/admin-dashboard/order-list"
+              element={<OrderList />}
             ></Route>
+            <Route path="/admin-dashboard/salons" element={<CreateSalonPage />}></Route>
+
           </Route>
 
+          {/* user route */}
           <Route
-            path="/employee-dashboard"
+            path="/supervisor-dashboard"
             element={
               <PrivateRoutes>
-                <RoleBaseRoutes requireRole={["admin", "employee"]}>
+                <RoleBaseRoutes requireRole={["admin"]}>
                   <EmployeeDashboard />
                 </RoleBaseRoutes>
               </PrivateRoutes>
@@ -142,37 +119,65 @@ const App = () => {
           >
             <Route index element={<EmployeeSummary />}></Route>
             <Route
-              path="/employee-dashboard/profile/:id"
-              element={<EmployeeView />}
+              path="/supervisor-dashboard/stationery-orders"
+              element={<StationeryOrderList />}
             ></Route>
+
+
+          </Route>
+          {/*Head Cook Routes*/}
+          <Route
+            path="/headcook-dashboard"
+            element={
+              <PrivateRoutes>
+                <RoleBaseRoutes requireRole={["admin", "headcook"]}>
+                  <HeadCookDashboard />
+                </RoleBaseRoutes>
+              </PrivateRoutes>
+            }
+          >
+            <Route index element={<HeadCookSummary />}></Route>
             <Route
-              path="/employee-dashboard/attendance/:id"
-              element={<EmployeeAttendance />}
+              path="/headcook-dashboard/catering-orders"
+              element={<CateringOrderList />}
             ></Route>
-            <Route
-              path="/employee-dashboard/leaves/:id"
-              element={<EmployeeLeavesList />}
-            ></Route>
-            <Route
-              path="/employee-dashboard/leaves/add"
-              element={<AddEmployeeLeaves />}
-            ></Route>
-            <Route
-              path="/employee-dashboard/salary/:id"
-              element={<SalaryView />}
-            ></Route>
-            <Route
-              path="/employee-dashboard/setting/:id"
-              element={<EmployeeSetting />}
-            ></Route>
-            <Route
-              path="/employee-dashboard/task/:id"
-              element={<EmployeeTaskList />}
-            ></Route>
-            <Route
-              path="/employee-dashboard/task/detail/:id"
-              element={<EmployeeTaskDetails />}
-            ></Route>
+
+          </Route>
+
+          {/*Manager Routes*/}
+          <Route
+            path="/manager-dashboard"
+            element={
+              <PrivateRoutes>
+                <RoleBaseRoutes requireRole={["manager"]}>
+                  <ManagerDashboard />
+                </RoleBaseRoutes>
+              </PrivateRoutes>
+            }
+          >
+            <Route index element={<ManagerSummary />}></Route>
+
+          </Route>
+
+          {/*Voyager Routes*/}
+          <Route
+            path="/voyager-dashboard"
+            element={
+              <PrivateRoutes>
+                <RoleBaseRoutes requireRole={["admin", "voyager"]}>
+                  <VoyagerDashboard />
+                </RoleBaseRoutes>
+              </PrivateRoutes>
+            }
+          >
+            <Route index element={<VoyagerSummary />}></Route>
+            <Route path="/voyager-dashboard/order-items" element={<Orders />} />
+            <Route path="/voyager-dashboard/booking" element={<BookingList />} />
+            <Route path="/voyager-dashboard/booking/movie-tickets" element={<UserTicketBookingPage />} />
+            <Route path="/voyager-dashboard/order-summary" element={<OrderSummaryPage />} />
+            <Route path="/voyager-dashboard/success" element={<OrderSuccessPage />} />
+            <Route path="/voyager-dashboard/orders/:userId" element={<ViewOrdersPage />} />
+            <Route path="/voyager-dashboard/order-list/:id" element={<OrderListById />} />
           </Route>
         </Routes>
       </BrowserRouter>

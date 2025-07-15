@@ -40,14 +40,14 @@ const EmployeeLeavesList = () => {
       </div>
       <div className="flex justify-between items-center">
         <input
-          type="hidden"
+          type="text"
           placeholder="Search By Department"
           className="px-4 py-1 shadow-2xl h-12  border border-gray-300 rounded-2xl "
         />
         {user.role === "employee" && (
           <Link
             to="/employee-dashboard/leaves/add"
-            className="bg-teal-500 font-semibold text-white py-2.5 px-4 rounded hover:bg-teal-900 hover:ring-2 transition-all duration-300"
+            className="flex justify-end items-center bg-teal-500 font-semibold text-white py-2.5 px-4 rounded hover:bg-teal-900 hover:ring-2 transition-all duration-300"
           >
             Add New Leave
           </Link>

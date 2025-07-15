@@ -1,44 +1,51 @@
 import { useEffect, useState } from "react";
-
 import DataTable from "react-data-table-component";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { colums, LeaveButtons } from "../../utils/LeavesHelper";
 import { Base_Url } from "../../service/Endpoints";
+
 const LeaveManagement = () => {
   const [leaves, setLeaves] = useState([]);
   const [filteredLeaves, setFilteredLeaves] = useState([]);
+  const [loading, setLoading] = useState(true); // New loading state
 
   const fetchLeaves = async () => {
+    setLoading(true); // Start loader
     try {
-      const response = await axios.get(`${Base_Url}/api/v1/leave`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
+      // Simulate 2-second loading delay (optional, for UX polish)
+      setTimeout(async () => {
+        const response = await axios.get(`${Base_Url}/api/v1/leave`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
 
-      if (response.data.success) {
-        let sno = 1;
-        const leavedata = response.data.leaves.map((leave) => ({
-          _id: leave._id,
-          sno: sno++,
-          employeeId: leave.employeeId?.employeeId,
-          name: leave.employeeId?.userId?.name,
-          leaveType: leave.leaveType,
-          department: leave.employeeId?.department?.dep_name,
-          days:
-            (new Date(leave.endDate) - new Date(leave.startDate)) /
-              (1000 * 60 * 60 * 24) +
-            1,
-          status: leave.status,
-          action: <LeaveButtons Id={leave._id} />,
-        }));
+        if (response.data.success) {
+          let sno = 1;
+          const leavedata = response.data.leaves.map((leave) => ({
+            _id: leave._id,
+            sno: sno++,
+            employeeId: leave.employeeId?.employeeId,
+            name: leave.employeeId?.userId?.name,
+            leaveType: leave.leaveType,
+            department: leave.employeeId?.department?.dep_name,
+            days:
+              (new Date(leave.endDate) - new Date(leave.startDate)) /
+                (1000 * 60 * 60 * 24) +
+              1,
+            status: leave.status,
+            action: <LeaveButtons Id={leave._id} />,
+          }));
 
-        setLeaves(leavedata);
-        setFilteredLeaves(leavedata);
-      }
+          setLeaves(leavedata);
+          setFilteredLeaves(leavedata);
+        }
+        setLoading(false); // End loader after data is ready
+      }, 2000);
     } catch (error) {
       toast.error(error.response?.data?.error || "Failed to Fetch Leaves Data");
+      setLoading(false); // Ensure loader stops even on error
     }
   };
 
@@ -46,29 +53,36 @@ const LeaveManagement = () => {
     fetchLeaves();
   }, []);
 
-  // Filter Leves by Emoployee ID
   const handleFilterChange = (e) => {
     const data = leaves.filter((leave) =>
-      leave.employeeId.toLowerCase().includes(e.target.value.toLowerCase())
+      leave.employeeId?.toLowerCase().includes(e.target.value.toLowerCase())
     );
-
     setFilteredLeaves(data);
   };
+
   const filterByStatus = (status) => {
     const data = leaves.filter((leave) =>
       leave.status.toLowerCase().includes(status.toLowerCase())
     );
-
     setFilteredLeaves(data);
   };
 
   return (
     <div className="p-4 md:p-6 lg:p-8 max-w-7xl mx-auto">
-      {filteredLeaves ? (
+      {loading ? (
+        <div className="flex items-center justify-center h-screen">
+          <div className="flex flex-col items-center">
+            <div className="w-12 h-12 border-4 border-teal-600 border-t-transparent rounded-full animate-spin"></div>
+            <p className="mt-4 text-teal-700 font-semibold">
+              Loading Leave Records...
+            </p>
+          </div>
+        </div>
+      ) : (
         <>
           <div className="text-center mb-6">
             <h3 className="text-4xl font-bold text-center text-teal-700 mb-8">
-              Leaves Managenent
+              Leave Management
             </h3>
           </div>
 
@@ -104,10 +118,6 @@ const LeaveManagement = () => {
           <div className="overflow-x-auto bg-white rounded-xl shadow-md">
             <DataTable columns={colums} data={filteredLeaves} pagination />
           </div>
-        </>
-      ) : (
-        <>
-          <div>Loading...</div>
         </>
       )}
     </div>
