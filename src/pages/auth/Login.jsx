@@ -32,7 +32,7 @@ const Login = () => {
     setLoading(true);
 
     try {
-      const { data } = await axios.post(`${Base_Url}/api/v1/auth/login`, formData);
+      const { data } = await axios.post(`https://payroll-server-smoky.vercel.app/api/v1/auth/login`, formData);
 
       if (data.success) {
         login(data.user);
